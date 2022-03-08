@@ -52,11 +52,25 @@ $$
 
 <aside>
 ❗ vTUNE - é gratuito, it seems? E dá em Windows.
-
 </aside>
 
 ### Comandos PAPI
 
 ```jsx
-papi_avail_a - ver os contadores disponíveis.
+papi_avail - a - ver os contadores disponíveis.
 ```
+
+### Resultados PAPI
+
+#### Alínea 1 C++
+
+| n    | t (s)   | FLOPS         |
+| ---- | ------- | ------------- |
+| 600  | 0.369   | 1170731707,32 |
+| 1000 | 1.846   | 1083423618,63 |
+| 1400 | 6.692   | 820083682,01  |
+| 1800 | 29.539  | 394867801,89  |
+| 2200 | 64.955  | 327857747,67  |
+| 2600 | 123.104 | 285547179,62  |
+| 3000 | 208.961 | 258421427,92  |
+
