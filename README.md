@@ -60,6 +60,14 @@ $$
 papi_avail - a - ver os contadores disponíveis.
 ```
 
+### Multiplicação de Matrizes em Bloco
+
+A matriz P de dimensões 4x4, pode ser dividida em blocos de 2x2, dividindo a operação de produto em operações mais pequenas que podem ser paralelizadas.
+
+O resultado é na mesma $2n^3$, não se altera o número de operações. É uma questão de paralelismo. Valores que funcoinam melhor atualmente: 128, 256, 512.  Elementos são sub matrizes.
+
+
+
 ### Resultados PAPI
 
 #### Alínea 1 C++

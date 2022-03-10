@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <time.h>
 #include <cstdlib>
+#include <cmath>
 #include <papi.h>
 
 using namespace std;
@@ -98,7 +99,7 @@ void OnMultLine(int m_ar, int m_br)
 			temp = 0;
 			for (j = 0; j < m_ar; j++)
 			{
-				phc[i * m_ar + j]+= pha[i * m_ar + k] * phb[k * m_br + j];
+				phc[i * m_ar + j] += pha[i * m_ar + k] * phb[k * m_br + j];
 			}
 			phc[i * m_ar + j] = temp;
 		}
@@ -123,13 +124,19 @@ void OnMultLine(int m_ar, int m_br)
 }
 
 // add code here for block x block matriz multiplication
-void OnMultBlock(int m_ar, int m_br, int bkSize)
+void OnMultBlock(int m_ar, int m_br, int cacheSizeKB)
 {
 	SYSTEMTIME Time1, Time2;
 
 	char st[100];
 	double temp;
 	int i, j, k;
+
+	int cacheSize = cacheSizeKB * 1024; // Changes according to specs
+	float datasize = 8;					// 4 bytes for int
+	int bkSize = (int)sqrt(cacheSize / 3.0 / datasize);
+	cout << "Your cache size is " << cacheSizeKB << "kB\n";
+	cout << "Your bkSize is " << bkSize << '\n';
 
 	double *pha, *phb, *phc;
 
@@ -158,7 +165,7 @@ void OnMultBlock(int m_ar, int m_br, int bkSize)
 					int temp = 0;
 					for (int k = kk; k < ((kk + bkSize) > m_br ? m_br : (kk + bkSize)); k++)
 					{
-						phc += pha[i * m_ar + k] * phb[k * m_br + j];
+						phc[i * m_ar + j] += pha[i * m_ar + k] * phb[k * m_br + j];
 					}
 				}
 			}
@@ -261,7 +268,7 @@ int main(int argc, char *argv[])
 			OnMultLine(lin, col);
 			break;
 		case 3:
-			cout << "Block Size? ";
+			cout << "Your L1 cache size in KB (check opening control pane > performance > cpu)\n";
 			cin >> blockSize;
 			OnMultBlock(lin, col, blockSize);
 			break;
