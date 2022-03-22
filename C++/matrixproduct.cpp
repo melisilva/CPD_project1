@@ -124,7 +124,7 @@ void OnMultLine(int m_ar, int m_br)
 }
 
 // add code here for block x block matriz multiplication
-void OnMultBlock(int m_ar, int m_br, int cacheSizeKB)
+void OnMultBlock(int m_ar, int m_br, int bkSize)
 {
 	SYSTEMTIME Time1, Time2;
 
@@ -132,13 +132,6 @@ void OnMultBlock(int m_ar, int m_br, int cacheSizeKB)
 	double temp;
 	int i, j, k;
 
-	int cacheSize = cacheSizeKB * 1024; // Changes according to specs
-	float datasize = 8;					// 4 bytes for int
-	int bkSize = (int)sqrt(cacheSize / 3.0 / datasize);
-	cout << "Your cache size is " << cacheSizeKB << "kB\n";
-	cout << "Your bkSize is " << bkSize << '\n';
-
-	bkSize = 128; // Change cache size here 
 	double *pha, *phb, *phc;
 
 	pha = (double *)malloc((m_ar * m_ar) * sizeof(double));
@@ -265,7 +258,7 @@ int main(int argc, char *argv[])
 			OnMultLine(lin, col);
 			break;
 		case 3:
-			cout << "Your L1 cache size in KB (check opening control pane > performance > cpu)\n";
+			cout << "Block Size? ";
 			cin >> blockSize;
 			OnMultBlock(lin, col, blockSize);
 			break;
