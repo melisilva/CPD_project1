@@ -138,6 +138,7 @@ void OnMultBlock(int m_ar, int m_br, int cacheSizeKB)
 	cout << "Your cache size is " << cacheSizeKB << "kB\n";
 	cout << "Your bkSize is " << bkSize << '\n';
 
+	bkSize = 128; // Change cache size here 
 	double *pha, *phb, *phc;
 
 	pha = (double *)malloc((m_ar * m_ar) * sizeof(double));
@@ -153,6 +154,7 @@ void OnMultBlock(int m_ar, int m_br, int cacheSizeKB)
 			phb[i * m_br + j] = (double)(i + 1);
 
 	Time1 = clock();
+	// https://stackoverflow.com/questions/16115770/block-matrix-multiplication
 
 	for (int jj = 0; jj < m_br; jj += bkSize)
 	{
@@ -160,10 +162,9 @@ void OnMultBlock(int m_ar, int m_br, int cacheSizeKB)
 		{
 			for (int i = 0; i < m_br; i++)
 			{
-				for (int j = jj; j < ((jj + bkSize) > m_br ? m_br : (jj + bkSize)); j++)
+				for (int k = kk; k < ((kk + bkSize) > m_br ? m_br : (kk + bkSize)); k++)
 				{
-					int temp = 0;
-					for (int k = kk; k < ((kk + bkSize) > m_br ? m_br : (kk + bkSize)); k++)
+					for (int j = jj; j < ((jj + bkSize) > m_br ? m_br : (jj + bkSize)); j++)
 					{
 						phc[i * m_ar + j] += pha[i * m_ar + k] * phb[k * m_br + j];
 					}
