@@ -154,24 +154,20 @@ void OnMultBlock(int m_ar, int m_br, int cacheSizeKB)
 			phb[i * m_br + j] = (double)(i + 1);
 
 	Time1 = clock();
-	// https://stackoverflow.com/questions/16115770/block-matrix-multiplication
 
-	for (int jj = 0; jj < m_br; jj += bkSize)
-	{
-		for (int kk = 0; kk < m_br; kk += bkSize)
-		{
-			for (int i = 0; i < m_br; i++)
-			{
-				for (int k = kk; k < ((kk + bkSize) > m_br ? m_br : (kk + bkSize)); k++)
-				{
-					for (int j = jj; j < ((jj + bkSize) > m_br ? m_br : (jj + bkSize)); j++)
-					{
-						phc[i * m_ar + j] += pha[i * m_ar + k] * phb[k * m_br + j];
-					}
-				}
-			}
-		}
-	}
+  for (int ii = 0; ii < m_ar ; ii += bkSize){
+        for (int kk = 0; kk < m_ar ; kk += bkSize){
+            for (int jj = 0; jj < m_ar ; jj += bkSize){
+                for (i = ii; i < ii+bkSize; i++) {
+                    for (k = kk; k < kk+bkSize; k++){
+                        for (j = jj; j < jj+bkSize; j++){
+                            phc[i * m_ar + j] += pha[i * m_ar + k] * phb[k * m_br + j];
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 	Time2 = clock();
 	sprintf(st, "Time: %3.3f seconds\n", (double)(Time2 - Time1) / CLOCKS_PER_SEC);
