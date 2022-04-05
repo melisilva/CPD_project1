@@ -26,3 +26,14 @@ Dynamic is used to give tasks to different threads dynamically; once one ends, y
 
 ## Exercise 5
 
+### a)
+
+Time = 16 seconds, e = 31. Needs taskwait, without taskwait, e = 0.
+
+### b)
+
+Time of 16 seconds. e = 31. Doesn't need taskwait.
+
+### c)
+
+Time is 18 seconds. e = 31.
